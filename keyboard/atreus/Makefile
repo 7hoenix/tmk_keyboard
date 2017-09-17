@@ -53,7 +53,8 @@ TARGET_DIR = .
 # project specific files
 SRC =	keymap_common.c \
 	matrix.c \
-	led.c
+	led.c \
+  light_ws2812.c
 
 KEYMAP ?= 7hoenix
 SRC := keymap_$(KEYMAP).c $(SRC)

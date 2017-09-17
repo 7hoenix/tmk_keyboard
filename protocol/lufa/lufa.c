@@ -1,4 +1,4 @@
-/* 
+/*
  * Copyright 2012 Jun Wako <wakojun@gmail.com>
  * This file is based on:
  *     LUFA-120219/Demos/Device/Lowlevel/KeyboardMouse
@@ -51,6 +51,7 @@
 
 #include "descriptor.h"
 #include "lufa.h"
+#include "light_ws2812.h"
 
 static uint8_t idle_duration = 0;
 static uint8_t protocol_report = 1;
@@ -98,10 +99,10 @@ static void Console_Task(void)
         {
             /* Create a temporary buffer to hold the read in report from the host */
             uint8_t ConsoleData[CONSOLE_EPSIZE];
- 
+
             /* Read Console Report Data */
             Endpoint_Read_Stream_LE(&ConsoleData, sizeof(ConsoleData), NULL);
- 
+
             /* Process Console Report Data */
             //ProcessConsoleHIDReport(ConsoleData);
         }
@@ -342,7 +343,7 @@ void EVENT_USB_Device_ControlRequest(void)
 }
 
 /*******************************************************************************
- * Host driver 
+ * Host driver
  ******************************************************************************/
 static uint8_t keyboard_leds(void)
 {
@@ -534,6 +535,8 @@ static void SetupHardware(void)
     print_set_sendchar(sendchar);
 }
 
+struct cRGB led[3];
+
 int main(void)  __attribute__ ((weak));
 int main(void)
 {
@@ -556,6 +559,12 @@ int main(void)
 #ifdef SLEEP_LED_ENABLE
     sleep_led_init();
 #endif
+    DDRB |= (1 << DDB2);
+    led[0].r=16;led[0].g=00;led[0].b=00;   // LED 0 is red
+    led[1].r=16;led[1].g=16;led[1].b=16;   // LED 1 is White
+    led[2].r=16;led[2].g=00;led[2].b=16;   // LED 2 is White
+
+    ws2812_setleds(led, 3);
 
     print("Keyboard start.\n");
     while (1) {
