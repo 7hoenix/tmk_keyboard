@@ -29,17 +29,45 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
         KC_UP, KC_F7, KC_F8, KC_F9, KC_F10, \
         KC_DEL, KC_LEFT, KC_DOWN, KC_RIGHT, KC_PGDN, \
         KC_DOWN, KC_F4, KC_F5, KC_F6, KC_F11,          \
-        KC_NO, KC__VOLUP, KC_NO, KC_NO, KC_FN3, \
+        KC_FN4, KC__VOLUP, KC_NO, KC_NO, KC_FN3, \
         KC_NO, KC_F1, KC_F2, KC_F3, KC_F12,            \
         KC_NO, KC__VOLDOWN, KC_LALT, KC_LSFT, KC_BSPC, KC_LCTL, \
-        KC_LGUI, KC_SPC, KC_FN2, KC_PSCREEN, KC_SLCK, KC_PAUSE) \
+        KC_LGUI, KC_SPC, KC_FN2, KC_PSCREEN, KC_SLCK, KC_PAUSE), \
+  /* 3: mouse control, reached by fn+esc, then holding z*/
+  KEYMAP(
+         //       left    up/down  right                              mouse wheel: left up/down right
+         KC_NO,   KC_NO,   KC_FN6,  KC_NO,   KC_NO,                   KC_NO,   KC_NO,   KC_FN10, KC_NO,   KC_NO,   \
+         KC_NO,   KC_FN8,  KC_FN7,  KC_FN9,  KC_NO,                   KC_NO,   KC_FN12, KC_FN11, KC_FN13, KC_NO,   \
+         //       acceleration settings                               buttons:    left   middle   right
+         KC_NO,   KC_FN19, KC_FN20, KC_FN21, KC_NO,                   KC_FN17,   KC_FN14, KC_FN16, KC_FN15, KC_FN18, \
+         KC_TRNS, KC_NO,   KC_TRNS, KC_TRNS, KC_NO, KC_TRNS, KC_TRNS, KC_NO,     KC_FN5,  KC_NO,   KC_NO,   KC_NO  \
+          )
 };
 
 const uint16_t PROGMEM fn_actions[] = {
   [0] = ACTION_LAYER_MOMENTARY(1),  // to Fn overlay
   [1] = ACTION_LAYER_ON(2, 1),  // switch to layer 2
   [2] = ACTION_LAYER_OFF(2, 1),  // switch back to layer 0
-  [3] = ACTION_FUNCTION(BOOTLOADER)
+  [3] = ACTION_FUNCTION(BOOTLOADER),
+  [4] = ACTION_LAYER_ON(3, 1),  // switch to layer 3
+  [5] = ACTION_LAYER_OFF(3, 1),  // switch back to layer 2
+
+  [6] = ACTION_MOUSEKEY(KC_MS_U), // mouse movement
+  [7] = ACTION_MOUSEKEY(KC_MS_D),
+  [8] = ACTION_MOUSEKEY(KC_MS_L),
+  [9] = ACTION_MOUSEKEY(KC_MS_R),
+  [10] = ACTION_MOUSEKEY(KC_WH_U), // wheel
+  [11] = ACTION_MOUSEKEY(KC_WH_D),
+  [12] = ACTION_MOUSEKEY(KC_WH_L),
+  [13] = ACTION_MOUSEKEY(KC_WH_R),
+  [14] = ACTION_MOUSEKEY(KC_BTN1), // clicks
+  [15] = ACTION_MOUSEKEY(KC_BTN2),
+  [16] = ACTION_MOUSEKEY(KC_BTN3),
+  [17] = ACTION_MOUSEKEY(KC_BTN4),
+  [18] = ACTION_MOUSEKEY(KC_BTN5),
+  [19] = ACTION_MOUSEKEY(KC_ACL0), // acceleration settings
+  [20] = ACTION_MOUSEKEY(KC_ACL1),
+  [21] = ACTION_MOUSEKEY(KC_ACL2),
 };
 
 void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)

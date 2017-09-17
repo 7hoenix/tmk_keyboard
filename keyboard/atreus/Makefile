@@ -39,7 +39,7 @@
 #----------------------------------------------------------------------------
 
 # Set to /dev/cu.usbmodem1421 or whatever on Macs
-USB ?= /dev/ttyACM0
+USB ?= /dev/tty.usbmodem1421
 
 # Target file name (without extension).
 TARGET = atreus
@@ -55,7 +55,7 @@ SRC =	keymap_common.c \
 	matrix.c \
 	led.c
 
-KEYMAP ?= qwerty
+KEYMAP ?= 7hoenix
 SRC := keymap_$(KEYMAP).c $(SRC)
 
 CONFIG_H = config.h
