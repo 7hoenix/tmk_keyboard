@@ -109,6 +109,8 @@ extern const uint16_t fn_actions[];
 
 enum function_id {
   BOOTLOADER,
+  LED_WHITE,
+  LED_OFF
 };
 
 void bootloader(void);
