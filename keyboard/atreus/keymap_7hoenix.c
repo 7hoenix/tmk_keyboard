@@ -28,10 +28,10 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
   /* 2: arrows and function keys */
     KEYMAP(KC_INS, KC_HOME, KC_UP, KC_END, KC_PGUP,             KC_UP, KC_F7, KC_F8, KC_F9, KC_F10, \
         KC_DEL, KC_LEFT, KC_DOWN, KC_RIGHT, KC_PGDN,            KC_DOWN, KC_F4, KC_F5, KC_F6, KC_F11,          \
-        KC_FN23, KC__VOLUP, KC_NO, KC_NO, KC_FN3,                KC_NO, KC_F1, KC_F2, KC_F3, KC_F12,            \
-        KC_FN22, KC__VOLDOWN, KC_LALT, KC_LSFT, KC_BSPC, KC_LCTL, KC_LGUI, KC_SPC, KC_FN2, KC_PSCREEN, KC_SLCK, KC_PAUSE), \
-        /* KC_FN4, KC__VOLUP, KC_NO, KC_NO, KC_FN3,                KC_NO, KC_F1, KC_F2, KC_F3, KC_F12,            \ */
-        /* KC_NO, KC__VOLDOWN, KC_LALT, KC_LSFT, KC_BSPC, KC_LCTL, KC_LGUI, KC_SPC, KC_FN2, KC_PSCREEN, KC_SLCK, KC_PAUSE), \ */
+        KC_FN4, KC_FN23, KC_NO, KC_NO, KC_FN3,                KC_NO, KC_F1, KC_F2, KC_F3, KC_F12,            \
+        KC_NO, KC_FN22, KC_LALT, KC_LSFT, KC_BSPC, KC_LCTL, KC_LGUI, KC_SPC, KC_FN2, KC_PSCREEN, KC_SLCK, KC_PAUSE), \
+        /* KC_FN23, KC__VOLUP, KC_NO, KC_NO, KC_FN3,                KC_NO, KC_F1, KC_F2, KC_F3, KC_F12,            \ */
+        /* KC_FN22, KC__VOLDOWN, KC_LALT, KC_LSFT, KC_BSPC, KC_LCTL, KC_LGUI, KC_SPC, KC_FN2, KC_PSCREEN, KC_SLCK, KC_PAUSE), \ */
 
   /* 3: mouse control, reached by fn+esc, then holding z*/
   KEYMAP(
@@ -72,7 +72,8 @@ const uint16_t PROGMEM fn_actions[] = {
   [23] = ACTION_FUNCTION(LED_OFF)
 };
 
-struct cRGB led[3];
+#define LED_COUNT 32
+struct cRGB led[LED_COUNT];
 
 void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
 {
@@ -82,17 +83,17 @@ void action_function(keyrecord_t *record, uint8_t id, uint8_t opt)
           break;
 
       case LED_OFF:
-          led[0].r=00;led[0].g=00;led[0].b=00;   // LED 0 is red
-          led[1].r=00;led[1].g=00;led[1].b=00;   // LED 1 is White
-          led[2].r=00;led[2].g=00;led[2].b=00;   // LED 2 is White
-          ws2812_setleds(led, 3);
+          for (int i = 0; i < LED_COUNT; i++) {
+            led[i].r=0;led[i].g=0;led[i].b=0;
+          }
+          ws2812_setleds(led, LED_COUNT);
           break;
 
       case LED_WHITE:
-          led[0].r=16;led[0].g=16;led[0].b=16;   // LED 0 is red
-          led[1].r=16;led[1].g=16;led[1].b=16;   // LED 1 is White
-          led[2].r=16;led[2].g=16;led[2].b=16;   // LED 2 is White
-          ws2812_setleds(led, 3);
+          for (int i = 0; i < LED_COUNT; i++) {
+            led[i].r=16;led[i].g=16;led[i].b=16;
+          }
+          ws2812_setleds(led, LED_COUNT);
           break;
   }
 }
